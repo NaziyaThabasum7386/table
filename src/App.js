@@ -72,7 +72,7 @@ function App() {
     const getContriesData = async () => {
       try {
         const res = await fetch(
-          "https://geektrust.s3-ap-southeast-1.amazonaws./adminui-problem/members.json"
+          "https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json"
         );
         if (!res.ok) {
           //throw new Error("Failed to fetch data"); // Throw error on failed fetch
