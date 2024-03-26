@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSnackbar } from "notistack";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import "./App.css";
 
@@ -64,34 +65,39 @@ function TableWithPagination({ data, itemsPerPage }) {
 
 function App() {
   const [data, setData] = useState([]);
-  const [error, setError] = useState(null);
+  const { enqueueSnackbar } = useSnackbar(); // Destructure enqueueSnackbar from useSnackbar
+  const [answer, setAnswer] = useState(""); // State for storing the answer
 
   useEffect(() => {
     const getContriesData = async () => {
       try {
         const res = await fetch(
-          "https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json"
+          "https://geektrust.s3-ap-southeast-1.amazonaws./adminui-problem/members.json"
         );
         if (!res.ok) {
-          throw new Error("failed to fetch data");
+          //throw new Error("Failed to fetch data"); // Throw error on failed fetch
+          enqueueSnackbar("failed to fetch data", { variant: "error" }); // Display error message
+          setAnswer("failed to fetch data"); // Set answer to "Failed to fetch data"
         }
         const jsonData = await res.json();
         setData(jsonData);
       } catch (err) {
-        setError(err.message);
+        enqueueSnackbar("failed to fetch data", { variant: "error" }); // Display error message
+        setAnswer("failed to fetch data"); // Set answer to "Failed to fetch data"
       }
     };
 
     getContriesData();
-  }, []);
+  }, [enqueueSnackbar]); // Add enqueueSnackbar to the dependency array
 
   return (
     <div className="container">
-       <h1 className="table-heading">Employee Data Table</h1>
-      {error && <div className="alert alert-danger">{error}</div>}
+      <h1 className="table-heading">Employee Data Table</h1>
       <TableWithPagination data={data} itemsPerPage={10} />
+      {answer && <div>{answer}</div>} {/* Render answer if it's not empty */}
     </div>
   );
 }
+
 
 export default App;
