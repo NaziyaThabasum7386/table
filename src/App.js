@@ -64,6 +64,7 @@ function TableWithPagination({ data, itemsPerPage }) {
 
 function App() {
   const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const getContriesData = async () => {
@@ -71,10 +72,13 @@ function App() {
         const res = await fetch(
           "https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json"
         );
+        if (!res.ok) {
+          throw new Error("Failed to fetch data");
+        }
         const jsonData = await res.json();
         setData(jsonData);
       } catch (err) {
-        console.log("failed to fetch data");
+        setError(err.message);
       }
     };
 
@@ -84,6 +88,7 @@ function App() {
   return (
     <div className="container">
        <h1 className="table-heading">Employee Data Table</h1>
+      {error && <div className="alert alert-danger">{error}</div>}
       <TableWithPagination data={data} itemsPerPage={10} />
     </div>
   );
