@@ -58,7 +58,7 @@ function App() {
   useEffect(() => {
     const getContriesData = async () => {
       try {
-        const res = await fetch("https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json");
+        const res = await fetch("https://geektrust.s3-ap-southeast-1.amazonaws./adminui-problem/members.json");
         if (!res.ok) {
           throw Error('could not fetch the data')
         }
@@ -76,10 +76,10 @@ function App() {
 
   return (
     <div>
-      {error && <div>{error}</div>}
+    
       <h1>Employee Data Table</h1>
       <TableWithPagination data={data} itemsPerPage={10} />
-      
+      <p>{error && <div>{error}</div>}</p> 
     </div>
   );
 }
