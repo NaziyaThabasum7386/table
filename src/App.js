@@ -1,4 +1,8 @@
+User
 import React, { useState, useEffect } from "react";
+import { useSnackbar } from "notistack";
+import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
+import "./App.css";
 
 function TableWithPagination({ data, itemsPerPage }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -13,9 +17,9 @@ function TableWithPagination({ data, itemsPerPage }) {
   };
 
   return (
-    <div>
-      <table>
-        <thead>
+    <div className="container">
+      <table className="table table-bordered table-striped">
+        <thead className="thead-dark">
           <tr>
             <th>ID</th>
             <th>Name</th>
@@ -34,23 +38,31 @@ function TableWithPagination({ data, itemsPerPage }) {
           ))}
         </tbody>
       </table>
-      <div>
+      <div className="text-center">
         {/* Pagination controls */}
-        <div>
-          {/* Pagination controls */}
-          <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
-            Previous
-          </button>
-          <button>{currentPage}</button>
-          <button onClick={() => handlePageChange(currentPage + 1)} disabled={endIndex === data.length}>
-            Next
-          </button>
-        </div>
+        <div className="text-center">
+  {/* Pagination controls */}
+  <button
+    className="btn btn-primary mx-3"
+    onClick={() => handlePageChange(currentPage - 1)}
+    disabled={currentPage === 1}
+  >
+    Previous
+  </button>
+  <button className="btn btn-primary mx-3">{currentPage}</button>
+  <button
+    className="btn btn-primary mx-3"
+    onClick={() => handlePageChange(currentPage + 1)}
+    disabled={endIndex === data.length}
+  >
+    Next
+  </button>
+</div>
+
       </div>
     </div>
   );
 }
-
 function App() {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
@@ -75,13 +87,11 @@ function App() {
   }, []);
 
   return (
-    <div>
-    
-      <h1>Employee Data Table</h1>
+    <div className="container">
+      <h1 className="table-heading">Employee Data Table</h1>
       <TableWithPagination data={data} itemsPerPage={10} />
-      <p>{error && <div>{error}</div>}</p> 
+      {error && <div>{error}</div>} {/* Render answer if it's not empty */}
     </div>
   );
 }
 
-export default App;
