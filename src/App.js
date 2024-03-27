@@ -66,7 +66,7 @@ function App() {
         setData(jsonData);
       } catch (err) {
         // Display alert message without throwing the error
-        setError("failed to fetch data")
+        alert("failed to fetch data")
       }
       
     };
