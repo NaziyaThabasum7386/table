@@ -1,6 +1,5 @@
-User
+
 import React, { useState, useEffect } from "react";
-import { useSnackbar } from "notistack";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import "./App.css";
 
@@ -65,7 +64,6 @@ function TableWithPagination({ data, itemsPerPage }) {
 }
 function App() {
   const [data, setData] = useState([]);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const getContriesData = async () => {
@@ -90,8 +88,9 @@ function App() {
     <div className="container">
       <h1 className="table-heading">Employee Data Table</h1>
       <TableWithPagination data={data} itemsPerPage={10} />
-      {error && <div>{error}</div>} {/* Render answer if it's not empty */}
     </div>
   );
 }
 
+
+export default App;
